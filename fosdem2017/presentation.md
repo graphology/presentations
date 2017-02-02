@@ -2,10 +2,17 @@
 
 ### Designing a graph library for JavaScript
 
---
-
-## Sub
-
 ---
 
-# Slide 2
+## Speakers
+
+#### Alexis Jacomy ([@jacomyal](https://github.com/jacomyal))
+
+*CTO of Matlo*
+
+~
+
+#### Guillaume Plique ([@Yomguithereal](https://github.com/Yomguithereal))
+
+*Developer at SciencesPo's médialab*
+
