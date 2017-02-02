@@ -1,64 +1,55 @@
-const React = require('react'),
-      blessed = require('blessed'),
-      {render} = require('react-blessed');
+const React = require('react');
+const blessed = require('blessed');
+const { render } = require('react-blessed');
 
 let graph = require('./graph.js');
 
 // App component
 function App() {
-
-  let nodeRows = graph.nodes().map(node => {
-    return [node];
-  });
-
-  nodeRows = [['Key', 'Weight']]
-    .concat(nodeRows);
-
-  let edgeRows = graph.edges().map(edge => {
-    return graph.extremities(edge)
-  });
-
-  edgeRows = [['Source', 'Target']]
-    .concat(edgeRows);
-
   return (
     <element>
-      <box top="left"
-           width="100%"
-           height="10%"
-           border={{type: 'line'}}
-           style={{border: {fg: 'blue'}}}>
-        <text top={0}>
-          Order of the graph: {graph.order}
+      <box
+        top="left"
+        width="100%"
+        height="10%"
+        border={{ type: 'line' }}
+        style={{ border: { fg: 'blue' } }}
+      >
+        <text
+          top={ 0 }
+          left={ 1 }
+        >
+          Order of the graph: { graph.order }
         </text>
-        <text top={1}>
-          Size of the graph: {graph.size}
+        <text
+          top={ 1 }
+          left={ 1 }
+        >
+          Size of the graph: { graph.size }
         </text>
       </box>
-      <text top="10%">
-        Nodes:
+
+      <text top="14%">
+        Nodes (todo):
       </text>
-      <listtable top="15%"
-             width="100%"
-             height="40%"
-             scrollable={true}
-             scrollbar={true}
-             mouse={true}
-             border={{type: 'line'}}
-             style={{border: {fg: 'blue'}}}
-             rows={nodeRows} />
-      <text top="55%">
-        Edges:
+      <box
+        top="15%"
+        width="100%"
+        height="40%"
+        border={{ type: 'line' }}
+        style={{ border: { fg: 'blue' } }}
+      />
+
+      <text top="59%">
+        Edges (todo):
       </text>
-      <listtable top="60%"
-             width="100%"
-             height="40%"
-             scrollable={true}
-             scrollbar={true}
-             mouse={true}
-             border={{type: 'line'}}
-             style={{border: {fg: 'blue'}}}
-             rows={edgeRows} />
+      <box
+        top="60%"
+        width="100%"
+        height="40%"
+        border={{ type: 'line' }}
+        style={{ border: { fg: 'blue' } }}
+      />
     </element>
   );
 }
