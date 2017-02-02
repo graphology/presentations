@@ -9,7 +9,7 @@
     3. Métriques (PageRank, Centrality, ...): Pas d'implémentation standard, quelques modules "rogues" qui traînent sur NPM
 * Notre solution: une spécification de référence pour un objet de graph polyvalent en JS (pas une librairie).
   - Expliquer le pourquoi du choix: les graphs sont des complex beasts et il n'y a pas UNE meilleure manière de faire et ça dépend surtout de l'usage voulu. Donc là on permet à n'importe qui d'implémenter et de garder le bénéfice de tout le code consommant ce standard.
-  - Le scope de cette spécification: analyse de graph, doit tenir en RAM, possible de l'utiliser pour du rendu.
+  - Le scope de cette spécification: analyse de graph, graph dirigés, non-dirigés, mixtes, simple ou parallèle, doit tenir en RAM, possible de l'utiliser pour du rendu.
 * Montrer du code avec un exemple bateau pour avoir une idée de l'API (Alexis)
   1. Ajouter des noeuds / arcs
   2. Parcourir les données (pour créer une vue "table" des noeuds et des arcs)
