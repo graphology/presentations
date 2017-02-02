@@ -4,7 +4,7 @@
   "description": "Demo for the FOSDEM 2017 graphology presentation.",
   "main": "index.js",
   "scripts": {
-    "start": "kotatsu start --quiet --es2015 --jsx index.js"
+    "start": "kotatsu monitor --es2015 --jsx index.js"
   },
   "author": "yomguithereal <kropotkinepiotr@gmail.com>",
   "license": "MIT",

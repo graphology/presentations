@@ -6,26 +6,60 @@ let graph = require('./graph.js');
 
 // App component
 function App() {
+
+  let nodeRows = graph.nodes().map(node => {
+    return [node];
+  });
+
+  nodeRows = [['Key', 'Weight']]
+    .concat(nodeRows);
+
+  let edgeRows = graph.edges().map(edge => {
+    return graph.extremities(edge)
+  });
+
+  edgeRows = [['Source', 'Target']]
+    .concat(edgeRows);
+
   return (
-    <box top="center"
-         left="center"
-         width="50%"
-         height="50%"
-         border={{type: 'line'}}
-         style={{border: {fg: 'blue'}}}>
-      <text top={0}>
-        Number of nodes: {graph.order}
+    <element>
+      <box top="left"
+           width="100%"
+           height="10%"
+           border={{type: 'line'}}
+           style={{border: {fg: 'blue'}}}>
+        <text top={0}>
+          Order of the graph: {graph.order}
+        </text>
+        <text top={1}>
+          Size of the graph: {graph.size}
+        </text>
+      </box>
+      <text top="10%">
+        Nodes:
       </text>
-      <text top={1}>
-        Number of edges: {graph.size}
+      <listtable top="15%"
+             width="100%"
+             height="40%"
+             scrollable={true}
+             scrollbar={true}
+             mouse={true}
+             border={{type: 'line'}}
+             style={{border: {fg: 'blue'}}}
+             rows={nodeRows} />
+      <text top="55%">
+        Edges:
       </text>
-      <text top={2}>
-        Nodes: {graph.nodes().join(', ')}
-      </text>
-      <text top={3}>
-        Edges: {graph.edges().map(edge => graph.extremities(edge).join('=>')).join(', ')}
-      </text>
-    </box>
+      <listtable top="60%"
+             width="100%"
+             height="40%"
+             scrollable={true}
+             scrollbar={true}
+             mouse={true}
+             border={{type: 'line'}}
+             style={{border: {fg: 'blue'}}}
+             rows={edgeRows} />
+    </element>
   );
 }
 
