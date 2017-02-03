@@ -37,4 +37,4 @@
   - Les Hypergraphes
   - Une version immutable (basée sur immutable-js ou mori)
   - Les déclarations Typescript
-  - Appel à contribution & à feedbacks
+  - Appel à contribution & à feedbacks, ce n'est qu'un WIP
