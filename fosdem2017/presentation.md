@@ -42,12 +42,41 @@ Todo: list the libraries & their caveats, add links
 * It is hard to use them on the server (hello, node.js)
 * More generally, most library are not generic enough and targets really specific use cases.
 * This means we are bound to implement popular algorithms each time (HITS, shortest paths etc.) again, and again, and again...
+* SNA algorithms
 
 ---
 
 ## SNA Algorithms
 
-Todo: Alexis, fill this up.
+* Standard Gephi SNA workflow:
+  1. Compute **metrics**, map to node sizes
+  2. Search for **communities**, map to node colors
+  3. Run some **layout algorithm**
+  4. ...and here is a network map!
+
+---
+
+## SNA Algorithms
+
+* Metrics (Pagerank, HITS, centralities, ...)?
+  - **No standard implementation** for quite standard algorithms
+
+---
+
+## SNA Algorithms
+
+* Community detection?
+  - Some [rogue](https://github.com/upphiminn/jLouvain) [implementations](https://github.com/haljin/js-louvain)
+  - Some graph rendering libs [have their own](https://www.npmjs.com/package/ngraph.louvain)
+
+---
+
+## SNA Algorithms
+
+* Force directed layouts?
+  - Again, some [rogue implementations](http://getspringy.com/)
+  - **Most** graph rendering libs [have](https://github.com/anvaka/ngraph.forcelayout) [their](https://github.com/d3/d3-force) [own](https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.layout.forceAtlas2)
+  - Source algorithms are various
 
 ---
 
@@ -566,8 +595,21 @@ Todo: store undirected edges
 
 ### Sigma.js
 
-Todo: finish the roadmap
+* Sigma as a rendering engine with *graphology* as a model
+  - More specific functional scope
+  - Less technical debt about SNA / layout algorithms
 
-Todo: Alexis
+---
+
+### Sigma.js
+
+* Move from the "some guy's pet project" workflow:
+  - More strict and efficient workflow (PRs, review, etc...)
+  - An actual transparent roadmap
+  - Move the project to a Github organisation (@Yomguithereal is way more invested in maintaining sigma than @jacomyal at the moment)
+
+---
+
+Todo: finish the roadmap
 
 
