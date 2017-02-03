@@ -295,9 +295,8 @@ graph.addEdgeWithKey(key, source, target, [attributes]);
 
 With a twist: ids are encoded in `base62` so you can easily copy-paste them and save up some space.
 
-```
+```python
+# 110ec58a-a0f2-4ac4-8393-c866d813b8d1
 # versus:
+# 1vCowaraOzD5wzfJ9Avc0g
 ```
-
-Todo: find examples
-
