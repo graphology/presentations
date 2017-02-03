@@ -10,6 +10,7 @@
 * Notre solution: une spécification de référence pour un objet de graph polyvalent en JS (pas une librairie).
   - Expliquer le pourquoi du choix: les graphs sont des complex beasts et il n'y a pas UNE meilleure manière de faire et ça dépend surtout de l'usage voulu. Donc là on permet à n'importe qui d'implémenter et de garder le bénéfice de tout le code consommant ce standard.
   - Le scope de cette spécification: analyse de graph, graph dirigés, non-dirigés, mixtes, simple ou parallèle, doit tenir en RAM, possible de l'utiliser pour du rendu.
+  - Représentation: node = key => attributes, edges (key) {source, target} => attributes
 * Montrer du code avec un exemple bateau pour avoir une idée de l'API (Alexis)
   1. Ajouter des noeuds / arcs
   2. Parcourir les données (pour créer une vue "table" des noeuds et des arcs)
@@ -23,6 +24,7 @@
   - Les throws et la notion de merge (comparaison avec structures classiques et networkx par exemple).
   - La possibilité de références comme clé et les idiomatismes JS + sérialisation.
   - Eventful pour les index et la possibilité de rendu incrémental => les attributes et les getter/setter + les iterateurs sur seulement des clés pour performance et forcer l'utilisateur (plus simple de concevoir ce sur quoi on itère).
+  - Notions de labels & weight etc. abstraits en attributes.
 * Technique de l'implémentation de référence:
   - On veut du temps constant sur la majorité de opérations => surcoût en RAM évidemment. Présenter la sparse matrix et le mode de stockage des voisins/stats (avec non duplication des sets) Map et Set ES6 rappel. Avoir du feedback là-dessus parce que bon...
   - Question du stockage des liens undirected (qui ont de fait une direction en interne).
