@@ -124,25 +124,8 @@ A standard library of common algorithms.
 
 ---
 
-### A specification, not a library (1/2)
-
-Why don't we just create & publish a library?
-
-Graphs are complex beasts and there is no *perfect* way to implement them.
-
-The reference implementation is built to handle well *most* cases.
-
-But someone will always be able to implement it in a way that fits a certain use case better.
-
----
-
-### A specification, not a library (2/2)
-
-So, with a specification, anyone remain free to implement them the way they see fit (a C++ backed implementation for node.js, why not?).
-
-Without losing the benefit of the standard library and without having to tediously rewrite all the needed algorithms.
-
----
+## A specification
+## not a library
 
 ```js
 import Graph from 'my-custom-graphology-implementation';
@@ -154,6 +137,18 @@ const graph = new Graph(...);
 const components = connectedComponents(graph);
 ```
 
+Note: Why don't we just create & publish a library?
+
+Graphs are complex beasts and there is no *perfect* way to implement them.
+
+The reference implementation is built to handle well *most* cases.
+
+But someone will always be able to implement it in a way that fits a certain use case better.
+
+So, with a specification, anyone remain free to implement them the way they see fit (a C++ backed implementation for node.js, why not?).
+
+Without losing the benefit of the standard library and without having to tediously rewrite all the needed algorithms.
+
 ---
 
 ## Concepts
@@ -163,12 +158,6 @@ const components = connectedComponents(graph);
 * That's it. That'a graph, no?
 
 Todo: check the documentation about concepts to see if we missed something.
-
----
-
-## Demo
-
-Todo: show some code + Alexis' demo
 
 ---
 
@@ -212,7 +201,7 @@ This is more idiomatic to JavaScript, saves up some memory and makes the graph t
 
 ---
 
-## Default graph type (1/4)
+## Default graph type
 
 By default, the graph is mixed, accept self-loops but does not accept parallel edges.
 
@@ -225,19 +214,13 @@ var graph = new Graph(null, {
 });
 ```
 
----
-
-## Default graph type (2/4)
-
-This means that the API is unified and will not be semantically different when you use a simple directed graph or a multi mixed graph.
+Note: This means that the API is unified and will not be semantically different when you use a simple directed graph or a multi mixed graph.
 
 With `networkx`, for instance, this is the contrary since each graph type will have a slightly different API.
 
-Todo: find an example in networkx
-
 ---
 
-## Default graph type (3/4)
+## Typed constructors
 
 However, the user still remains free to indicate the graph's type as a kind of performance hint.
 
@@ -251,9 +234,7 @@ var graph = new MultiDirectedGraph();
 
 ---
 
-## Default graph type (4/4)
-
-This also means that, even if the API is unified, the graph object should be able to correctly inform the user when he does something wrong or inconsistent.
+## Useful error messages & hints
 
 ```js
 var graph = new Graph();
@@ -265,6 +246,8 @@ graph.addEdge('John', 'Jack');
 // this edge already exists in the graph but that he can use
 // a `MultiGraph` if it's really what they intended to do.
 ```
+
+Note: This also means that, even if the API is unified, the graph object should be able to correctly inform the user when he does something wrong or inconsistent.
 
 ---
 
