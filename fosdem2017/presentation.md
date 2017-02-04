@@ -29,8 +29,8 @@
 
 ## JavaScript State of the art
 
-* Cytoscape.js
-* Sigma.js
+* [Cytoscape.js](http://js.cytoscape.org/) (tied to rendering)
+* [Sigma.js](http://sigmajs.org/) (tied to rendering)
 
 Todo: list the libraries & their caveats, add links
 
@@ -87,9 +87,7 @@ Well, we certainly hope not.
 
 ---
 
-## The graphology specifications
-
-Todo: put a screenshot.
+<!-- .slide: data-background-image="./img/frontpage.png"-->
 
 ---
 
@@ -103,15 +101,6 @@ A standard library of common algorithms.
 
 ---
 
-### Goals of this presentation
-
-* Present the specifications
-* Outline the design issues with had when creating the API
-* Speak about the technical choices made for the reference implementation
-* Collect feedback & know whether we're gonna hit the wall
-
----
-
 ## Multipurpose
 
 * The graph can be **directed**, **undirected** or **mixed**.
@@ -120,11 +109,11 @@ A standard library of common algorithms.
 
 ---
 
-## Objectives
+## Use cases
 
 * Graph analysis (compute metrics & indices...)
 * Graph handling (build graphs from data, modify an already existing graph...)
-* Graph rendering (interactive graph visualization in the browser...)
+* Data model for graph rendering (interactive graph visualization in the browser...)
 * ...
 
 ---
@@ -589,6 +578,10 @@ Information stored about the edges:
 
 ---
 
+I am sure someone can find better. #halp
+
+---
+
 ### Last issue: the case of undirected edges
 
 How to store undirected edges?
@@ -608,10 +601,6 @@ Should we hash the source & target keys?
 ---
 
 Please do read the [code](https://github.com/graphology/graphology) for precisions, it is Open Source after all...
-
----
-
-I am sure someone can find better. #halp
 
 ---
 
