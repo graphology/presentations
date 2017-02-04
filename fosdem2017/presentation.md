@@ -31,10 +31,10 @@
 
 * [Cytoscape.js](http://js.cytoscape.org/) (tied to rendering)
 * [Sigma.js](http://sigmajs.org/) (tied to rendering)
-* [graphlib](https://www.npmjs.com/package/graphlib) (limited)
+* [graphlib](https://www.npmjs.com/package/graphlib)
 * [jsnetworkx](http://jsnetworkx.org/)
-* [graph](https://www.npmjs.com/package/graph) (limited)
-* [Graph](https://www.npmjs.com/package/Graph) (no readme)
+* [graph](https://www.npmjs.com/package/graph)
+* [Graph](https://www.npmjs.com/package/Graph)
 
 ---
 
