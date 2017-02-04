@@ -161,6 +161,10 @@ Todo: check the documentation about concepts to see if we missed something.
 
 ---
 
+Todo: add gross example
+
+---
+
 ### Current state of the standard library
 
 * [graphology-assertions](https://github.com/graphology/graphology-assertions#readme)
@@ -251,45 +255,9 @@ Note: This also means that, even if the API is unified, the graph object should 
 
 ---
 
-## Edges & their keys (1/4)
-
-An edge must have a key because this is the way the graph knows them & store them.
-
-It's the only way to be able to target precise edges in a multi-graph, for instance, where the `{source,target}` combo is not enough.
-
----
-
-## Edges & their keys (2/4)
-
-**Problem**: we learned the hard way with sigma.js that it is very tedious to ask your users to generate keys for their edges.
-
-Even more when the use case does not require it.
+## Optional edge keys
 
 ```js
-// At the beginning the API to add an edge had to take a key:
-graph.addEdge(key, source, target, [attributes]);
-
-// Need to do silly things like this:
-let i = 0;
-edgesData.forEach(data => {
-  graph.addEdge(i++, data.source, data.target);
-});
-```
-
----
-
-## Edges & their keys (3/4)
-
-**Solution**: the graph is able to generate edge keys on its own, and you can even customize it.
-
-```js
-// At the beginning, we added an explicit way to add
-// an edge without a key
-graph.addEdgeWithoutKey(source, target, [attributes]);
-
-// But this was bonkers because people seldom needed keys
-// so we reversed the logic:
-
 // 1: key will be generated
 graph.addEdge(source, target, [attributes]);
 
@@ -297,9 +265,19 @@ graph.addEdge(source, target, [attributes]);
 graph.addEdgeWithKey(key, source, target, [attributes]);
 ```
 
+Note: An edge must have a key because this is the way the graph knows them & store them.
+
+It's the only way to be able to target precise edges in a multi-graph, for instance, where the `{source,target}` combo is not enough.
+
+**Problem**: we learned the hard way with sigma.js that it is very tedious to ask your users to generate keys for their edges.
+
+Even more when the use case does not require it.
+
+**Solution**: the graph is able to generate edge keys on its own, and you can even customize it.
+
 ---
 
-## Edges & their keys (4/4)
+## On key generation
 
 **Fun fact**: currently, the reference implementation generates v4 uuids for the edges (you can only go so far with incremental ids...).
 
@@ -311,45 +289,48 @@ With a twist: ids are encoded in `base62` so you can easily copy-paste them and 
 # 1vCowaraOzD5wzfJ9Avc0g
 ```
 
+Note: behavior can be customized.
+
 ---
 
-### To throw or not to throw? (1/2)
-
-What should we do when, for instance, the user attempts to insert an already existing node into the graph?
+### Adding & merging nodes
 
 ```js
-// Solution n°1: treat the graph like any data structure
-graph.addNode('already-there'); // No-op
-// Same than with a `Set`
-set.add('already-there'); // No-op
-
-// Solution n°2: throw and explain the node already exists
-graph.addNode('already-there');
+// Adding a node
+graph.addNode('John', {age: 34});
+// Adding the same node again, will throw
+graph.addNode('John', {height: 172});
 >>> Error
+
+// Explicitly merge the node
+graph.mergeNode('John', {height: 172});
 ```
+
+Note: What should we do when, for instance, the user attempts to insert an already existing node into the graph?
+
+Should we behave like a Set?
+
+So we went for solution n°2 because when you add the question of attributes to the equation, it becomes really complex.
+
+This felt too magical so we went with a combination of errors and `#.merge*` methods, *à la Cypher* to make this kind of behavior explicit.
 
 ---
 
-### To throw or not to throw? (2/2)
+### What is a key?
 
-So we went for solution n°2 because when you add the question of attributes to the equation, it becomes really complex:
+What should we allow as a key?
 
-```js
-graph.addNode('already-there', {hello: 'world'});
-// What should we do? Ignore the data? Merge the data?
-```
+Only strings?
 
-This felt too magical so we went with a combination of errors and `#.merge*` methods, *à la Cypher* to make this kind of behavior explicit:
+Should we accept references like an ES6 `Map` does?
 
-```js
-graph.mergeNode('already-there', {hello: 'world'});
-```
+So we just dropped the idea of references as keys and went with JavaScript `Object`'s semantics.
 
----
+Note:
 
-### What is a key? (1/2)
-
-What should we allow as a key? Only strings? Should we accept references like with an ES6 `Map`?
+1. It feels more like JavaScript.
+2. It does not impose a burden on libraries and users to use ES6 maps and consider the fact that you could need to handle references as keys.
+3. References are not straightforwardly serializable anyway! (*And graphs just love being serialized*)
 
 ```js
 // Stages of grief:
@@ -360,51 +341,28 @@ What should we allow as a key? Only strings? Should we accept references like wi
 
 ---
 
-### What is a key? (2/2)
+### We need events...
 
-So we just dropped the idea of references as keys and went with JavaScript `Object`'s semantics for the following reasons:
+```js
+graph.on('nodeAttributesUpdated', data => {
+  console.log(`Node ${data.key} was updated!`);
+});
+```
 
-1. It feels more like JavaScript.
-2. It does not impose a burden on libraries and users to use ES6 maps and consider the fact that you could need to handle references as keys.
-3. References are not straightforwardly serializable anyway! (*And graphs just love being serialized*)
-
----
-
-### Events, attributes & iteration (1/6)
+Note:
 
 As the `Graph` object could be potentially be used with interactive rendering libraries, we need it to be eventful.
 
 What's more, we need to have fine-grained events at the nodes & edges' level so we can know, for instance, when an attribute is updated.
-
----
-
-### Events, attributes & iteration (2/6)
-
-For example:
 
 * When rendering, the fact that you know a node's color attribute was changed enables you to perform clever incremental rendering in some cases.
 * When keeping indices, it becomes easy to synchronize your index even if you graph gets mutated.
 
 ---
 
-### Events, attributes & iteration (3/6)
+### ...so we need getters & setters for attributes...
 
-However, this simple fact means that we cannot let the user handle the attributes impolitely.
-
-We need to have getters & setters (**#notjavabutalittlebitjavanevertheless**...).
-
-Because we are not magically going to know what was mutated.
-
-```js
-// Really? Are you that insane?
-setInterval(function() {
-  haveYouChangedOhMyGraph();
-}, 10);
-```
-
----
-
-### Events, attributes & iteration (4/6)
+**#notjavabutalittlebitjavanevertheless**
 
 ```js
 // Want an attribute or attributes?
@@ -421,9 +379,11 @@ graph.getEdgeAttribute(source, target, name);
 graph.setNodeAttribute(node, name, value);
 ```
 
+Note: cannot rely on a `setInterval`.
+
 ---
 
-### Events, attributes & iteration (5/6)
+### ...so we need getters & setters for attributes...
 
 But this doesn't mean we have to be stupid about it
 
@@ -443,9 +403,9 @@ graph.updateNodeAttribute('John', 'counter', x => x + 1);
 
 ---
 
-### Events, attributes & iteration (6/6)
+### ...and this means simpler iteration semantics!
 
-As a pleasant side effect, this also mean that iterations semantics are simpler since you will never be provided with attribute data. Only keys.
+Iteration methods only provide keys.
 
 ```js
 graph.addNode('John', {age: 34});
@@ -460,23 +420,12 @@ graph.nodes();
 [['John', {age: 34}], ...]
 ```
 
----
-
-### Labels & weights & ... ? (1/2)
-
-Some libraries tend to give a special meaning to certain attributes because they are important in *theory*.
-
-But why create new semantics for something which is exactly the same as attributes?
-
-Most utilities in the standard library acknowledge this fact by hitting some attribute names by convention but let you customize the name if you need.
-
-What's more, graphs often tend to foster completely different terminologies for the same things (nodes, vertices etc.)
 
 ---
 
-### Labels & weights & ... ? (2/2)
+### Labels & weights & ... ?
 
-An example:
+No special treatment for labels & weights etc. They are just attributes like any other.
 
 ```js
 import hits from 'graphology-hits';
@@ -487,6 +436,14 @@ hits.assign(graph, {
   }
 });
 ```
+
+Note: Some libraries tend to give a special meaning to certain attributes because they are important in *theory*.
+
+But why create new semantics for something which is exactly the same as attributes?
+
+Most utilities in the standard library acknowledge this fact by hitting some attribute names by convention but let you customize the name if you need.
+
+What's more, graphs often tend to foster completely different terminologies for the same things (nodes, vertices etc.)
 
 ---
 
@@ -524,12 +481,6 @@ Information stored about the nodes:
 
 ---
 
-Neigbhors are stored as a map whose keys are neighbors' keys and values are `Set` objects of the related edges' keys.
-
-To save memory, the sets of edges are not duplicated between two nodes. This means that the set of out edges from A to B is the same as the set of in edges from B to A.
-
----
-
 ```js
 {
   A: {
@@ -545,6 +496,12 @@ To save memory, the sets of edges are not duplicated between two nodes. This mea
   }
 }
 ```
+
+Note: 
+
+Neigbhors are stored as a map whose keys are neighbors' keys and values are `Set` objects of the related edges' keys.
+
+To save memory, the sets of edges are not duplicated between two nodes. This means that the set of out edges from A to B is the same as the set of in edges from B to A.
 
 ---
 
