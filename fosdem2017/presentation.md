@@ -41,14 +41,13 @@ Todo: list the libraries & their caveats, add links
 * Graph data structures are often tied to a rendering library.
 * It is hard to use them on the server (hello, node.js)
 * More generally, most library are not generic enough and targets really specific use cases.
-* This means we are bound to implement popular algorithms each time (HITS, shortest paths etc.) again, and again, and again...
-* SNA algorithms
+* This means we are bound to implement popular SNA algorithms each time again, and again, and again...
 
 ---
 
 ## SNA Algorithms
 
-* Standard Gephi SNA workflow:
+* "Standard" Gephi SNA workflow:
   1. Compute **metrics**, map to node sizes
   2. Search for **communities**, map to node colors
   3. Run some **layout algorithm**
