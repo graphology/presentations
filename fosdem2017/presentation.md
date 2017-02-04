@@ -567,12 +567,12 @@ Please do read the [code](https://github.com/graphology/graphology) for precisio
 ### Sigma.js
 
 * Sigma as a rendering engine with *graphology* as a model
-  - More specific functional scope
-  - Less technical debt about SNA / layout algorithms
+  - More specific functional scope (rendering + interactions only)
+  - No more "We need a Pagerank for this rendering engine!" nonsense
 
 ---
 
-### Sigma.js
+### Sigma.js (community note)
 
 * Move from the "some guy's pet project" workflow:
   - More strict and efficient workflow (PRs, review, etc...)
