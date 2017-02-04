@@ -577,7 +577,7 @@ Please do read the [code](https://github.com/graphology/graphology) for precisio
 * Move from the "some guy's pet project" workflow:
   - More strict and efficient workflow (PRs, review, etc...)
   - An actual transparent roadmap
-  - Move the project to a Github organisation (@Yomguithereal is way more invested in maintaining sigma than @jacomyal at the moment)
+  - Move the project to a Github organization
 
 ---
 
