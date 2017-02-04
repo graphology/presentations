@@ -42,7 +42,7 @@
 
 * Graph data structures are often tied to a rendering library.
 * It is hard to use them on the server (hello, node.js)
-* More generally, most library are not generic enough and targets really specific use cases.
+* More generally, most libraries are not generic enough and targets really specific use cases.
 * This means we are bound to implement popular SNA algorithms each time again, and again, and again...
 
 ---
