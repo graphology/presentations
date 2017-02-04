@@ -6,15 +6,15 @@
 
 ## Speakers
 
-#### Alexis Jacomy ([@jacomyal](https://github.com/jacomyal))
-
-*CTO of Matlo*
-
-~
-
 #### Guillaume Plique ([@Yomguithereal](https://github.com/Yomguithereal))
 
 *Developer at SciencesPo's médialab*
+
+~
+
+#### Alexis Jacomy ([@jacomyal](https://github.com/jacomyal))
+
+*CTO of Matlo, sigma.js developer*
 
 ---
 
