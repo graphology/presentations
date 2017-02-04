@@ -103,6 +103,15 @@ A standard library of common algorithms.
 
 ---
 
+### Goals of this presentation
+
+* Present the specifications
+* Outline the design issues with had when creating the API
+* Speak about the technical choices made for the reference implementation
+* Collect feedback & know whether we're gonna hit the wall
+
+---
+
 ## Multipurpose
 
 * The graph can be **directed**, **undirected** or **mixed**.
@@ -580,11 +589,29 @@ Information stored about the edges:
 
 ---
 
-I am sure someone can find better. #halp
+### Last issue: the case of undirected edges
+
+How to store undirected edges?
+
+In the current implementation, undirected edges are stored using the given direction (`undirectedIn` & `undirectedOut`) but this does not affect the semantices of the API.
+
+This means that two equivalent graphs may have a different memory representation because an implicit direction is kept.
 
 ---
 
-Todo: store undirected edges
+### But is this really an issue?
+
+Should we sort the source & target keys?
+
+Should we hash the source & target keys?
+
+---
+
+Please do read the [code](https://github.com/graphology/graphology) for precisions, it is Open Source after all...
+
+---
+
+I am sure someone can find better. #halp
 
 ---
 
@@ -609,6 +636,22 @@ Todo: store undirected edges
 
 ---
 
-Todo: finish the roadmap
+## Hypergraphs?
 
+---
 
+## Immutable version?
+
+Easy to write using [`immutable-js`](https://facebook.github.io/immutable-js) or [`mori`](https://github.com/swannodette/mori).
+
+---
+
+## TypeScript & friends
+
+It would be nice to have `TypeScript` or/and `flow` definitions.
+
+---
+
+## Thank you!
+
+This is all but a *Work in Progress*.
