@@ -31,8 +31,10 @@
 
 * [Cytoscape.js](http://js.cytoscape.org/) (tied to rendering)
 * [Sigma.js](http://sigmajs.org/) (tied to rendering)
-
-Todo: list the libraries & their caveats, add links
+* [graphlib](https://www.npmjs.com/package/graphlib) (limited)
+* [jsnetworkx](http://jsnetworkx.org/)
+* [graph](https://www.npmjs.com/package/graph) (limited)
+* [Graph](https://www.npmjs.com/package/Graph) (no readme)
 
 ---
 
@@ -157,11 +159,24 @@ Without losing the benefit of the standard library and without having to tedious
 * An edge is represented by a key (that may be provided or generated) and can also be represented by attributes.
 * That's it. That'a graph, no?
 
-Todo: check the documentation about concepts to see if we missed something.
-
 ---
 
-Todo: add gross example
+```js
+import Graph from 'graphology';
+
+const graph = new Graph();
+graph.addNode('John');
+graph.addNode('Suzy');
+graph.addEdge('John', 'Suzy');
+
+graph.setNodeAttribute('Suzy', {age: 34});
+
+graph.order // >>> 2
+
+graph.nodes(); // >>> ['John', 'Suzy']
+
+graph.neighbors('John'); // >>> ['Suzy']
+```
 
 ---
 
@@ -453,19 +468,20 @@ What's more, graphs often tend to foster completely different terminologies for 
 
 ### Constant time vs. memory
 
-Since we can't know about our potential users' goals, we cannot aggressively optimize the reference implementation for a single use case.
-
-Most common read operations should therefore run in constant time.
-
-This obviously means some memory overhead.
+* We don't know the precise use cases.
+* So we can't aggressively optimize.
+* Most common read operations should therefore run in constant time.
+* This obviously means some memory overhead.
 
 ---
 
 ### The actual data structure
 
-Two ES6 `Map` objects to store nodes & edges (faster on recent engines & keeps order information).
+Two ES6 `Map` objects to store nodes & edges (faster on recent engines).
 
-Lazy indexation of neighborhoods (inintuitively, a multigraph might be faster for some use cases because you don't need to ensure the structure is coherent).
+Lazy indexation of neighborhoods. #sparsematrix
+
+Note: (inintuitively, a multigraph might be faster for some use cases because you don't need to ensure the structure is coherent).
 
 ---
 
@@ -526,9 +542,9 @@ I am sure someone can find better. #halp
 
 How to store undirected edges?
 
-In the current implementation, undirected edges are stored using the given direction (`undirectedIn` & `undirectedOut`) but this does not affect the semantices of the API.
+Implicit direction given.
 
-This means that two equivalent graphs may have a different memory representation because an implicit direction is kept.
+Two equivalent graphs may have a different memory representation.
 
 ---
 
